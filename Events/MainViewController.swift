@@ -9,12 +9,10 @@
 import UIKit
 import CoreData
 
-//class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVEventControllerDelegate {
 
     let coreDataObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-//    var events: NSArray = NSArray()
     var events: [Event] = [Event]()
 
     @IBOutlet weak var tableView: UITableView!
@@ -22,30 +20,31 @@ import CoreData
     @IBAction func addEventPressed(_ sender: Any) {
         print("got here 1")
         performSegue(withIdentifier: "showEvent", sender: nil)
-//        print("comes thru here?")
-//        loadEvents()
-//        tableView.reloadData()
-//        
     }
     
     
     func loadEvents() {
         do {
-            events = try coreDataObjectContext.fetch(Event.fetchRequest())
+            let result = try coreDataObjectContext.fetch(Event.fetchRequest())
+            events = result as! [Event]
+            for event in events {
+                print(event.title)
+            }
         }
         catch {
             let readable_error = error as NSError
             print(readable_error)
         }
-        print(events.count)
+        print("end of loadEvents events.count= \(events.count)")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        tableView.dataSource = self
-//        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
         loadEvents()
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,7 +61,7 @@ import CoreData
         if events[indexPath.row].open == true {
             identifier = "open"
         }
-        if events[indexPath.row].open == false {
+        else {
             identifier = "closed"
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier)! as UITableViewCell
@@ -88,29 +87,40 @@ import CoreData
             AVEventController.parmEvent?.title = event.title
             AVEventController.parmEvent?.info = event.info
             AVEventController.parmEvent?.start = event.start
-            
+            AVEventController.parmIndexPath = indexPath
         }
         else {
-            let event = NSEntityDescription.insertNewObject(forEntityName: "Event", into: coreDataObjectContext) as! Event
+            let event = Event(context: coreDataObjectContext)
             event.start = Date() as NSDate?
             event.title = ""
             event.info = ""
             AVEventController.parmEvent = event
+            AVEventController.parmIndexPath = nil
         }
     }
     
-    func savePressed(controller: AddViewEventController, event: Event?, atRow: NSIndexPath?) {
-        print("returning from Save Pressed")
-        //            do {
-        //                try coreDataObjectContext.save()
-        //                print("Stored an event")
-        //                self.dismiss(animated: true, completion: nil)
-        //            } catch {
-        //                let nserror = error as NSError
-        //                print("Unresolved error \(nserror), \(nserror.userInfo)")
-        //                abort()
-        //            }
-
+        func savePressed(controller: AddViewEventController, event: Event?, atRow indexPath: NSIndexPath?) {
+        print("returning to Main from Save Pressed")
+            if indexPath != nil {
+                // locate the correct row in my events array
+                event!.open = true
+                events[indexPath!.row] = event!
+            }
+            else {
+                // create a new entry into the Event entity in the coreDataObjectContext
+                var newEvent = NSEntityDescription.insertNewObject(forEntityName: "Event", into: coreDataObjectContext) as! Event
+                newEvent = event!
+                newEvent.open = true
+            }
+            do {
+                try coreDataObjectContext.save()
+                print("Stored an event")
+                self.dismiss(animated: true, completion: nil)
+            } catch {
+                let nserror = error as NSError
+                print("Unresolved error \(nserror), \(nserror.userInfo)")
+                abort()
+            }
         loadEvents()
         tableView.reloadData()
     }

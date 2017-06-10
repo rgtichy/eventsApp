@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+//import CoreData
 
 class AddViewEventController: UIViewController {
     
@@ -30,25 +30,30 @@ class AddViewEventController: UIViewController {
 
     @IBAction func savePressed(_ sender: UIButton) {
         print("INSIDE AddView Event Controller: save pressed")
-        let event = Event(context: coreDataObjectContext)
+//        let event = Event(context: coreDataObjectContext)
+        let event = Event()
         if titleInput.text != "" {
             event.title = titleInput.text
             event.info = infoInput.text
-            event.start = startInput.date as NSDate?
-                        do {
-                            try coreDataObjectContext.save()
-                            print("Stored an event")
-//                            self.dismiss(animated: true, completion: nil)
-                        } catch {
-                            let nserror = error as NSError
-                            print("Unresolved error \(nserror), \(nserror.userInfo)")
-                            abort()
-                        }
+            event.start = startInput.date as NSDate
+            print("*** Date? ***")
+            print(startInput.date)
+            print("*** Date? ***")
+            print(event.start)
+//                do {
+//                    try coreDataObjectContext.save()
+//                    print("Stored an event")
+//                } catch {
+//                    let nserror = error as NSError
+//                    print("Unresolved error \(nserror), \(nserror.userInfo)")
+//                    abort()
+//                }
             if ((parmIndexPath) != nil) {
                 delegate?.savePressed(controller: self, event: event, atRow: parmIndexPath)
             } else {
                 delegate?.savePressed(controller: self, event: event, atRow: nil)
             }
+        self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -58,7 +63,6 @@ class AddViewEventController: UIViewController {
         titleInput.text = parmEvent?.title
         infoInput.text = parmEvent?.info
         startInput.date = parmEvent?.start as! Date
-        
         // Do any additional setup after loading the view.
     }
 
@@ -66,16 +70,5 @@ class AddViewEventController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
