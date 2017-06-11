@@ -201,8 +201,19 @@ import CoreData
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let event = events[indexPath.row]
-        coreDataObjectContext.delete(event)
+        if indexPath.section == 0 {
+            let event = open_events[indexPath.row]
+            coreDataObjectContext.delete(event)
+            open_events.remove(at: indexPath.row)
+        }
+        if indexPath.section == 1 {
+            let event = closed_events[indexPath.row]
+            coreDataObjectContext.delete(event)
+            closed_events.remove(at: indexPath.row)
+
+        }
+//        let event = events[indexPath.row]
+//        coreDataObjectContext.delete(event)
         if coreDataObjectContext.hasChanges {
             do {
                 try coreDataObjectContext.save()
@@ -212,7 +223,7 @@ import CoreData
                 abort()
             }
         }
-        events.remove(at: indexPath.row)
+//        events.remove(at: indexPath.row)
         tableView.reloadData()
         
     }
