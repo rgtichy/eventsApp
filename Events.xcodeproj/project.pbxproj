@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A059557D1EEC27C6004EBB4D /* EventStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A059557C1EEC27C6004EBB4D /* EventStruct.swift */; };
 		A06251EC1EE43E35007E5B5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06251EB1EE43E35007E5B5E /* AppDelegate.swift */; };
 		A06251EE1EE43E35007E5B5E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06251ED1EE43E35007E5B5E /* MainViewController.swift */; };
 		A06251F11EE43E35007E5B5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A06251EF1EE43E35007E5B5E /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A059557C1EEC27C6004EBB4D /* EventStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStruct.swift; sourceTree = "<group>"; };
 		A06251E81EE43E35007E5B5E /* Events.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Events.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06251EB1EE43E35007E5B5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A06251ED1EE43E35007E5B5E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			children = (
 				A06251EB1EE43E35007E5B5E /* AppDelegate.swift */,
 				A06251ED1EE43E35007E5B5E /* MainViewController.swift */,
+				A059557C1EEC27C6004EBB4D /* EventStruct.swift */,
 				A06252021EE46BF7007E5B5E /* AVEventControllerDelegate.swift */,
 				A06251EF1EE43E35007E5B5E /* Main.storyboard */,
 				A06252001EE45DEB007E5B5E /* AddViewEventController.swift */,
@@ -149,6 +152,7 @@
 				A06251F41EE43E35007E5B5E /* Events.xcdatamodeld in Sources */,
 				A06252011EE45DEB007E5B5E /* AddViewEventController.swift in Sources */,
 				A06251EE1EE43E35007E5B5E /* MainViewController.swift in Sources */,
+				A059557D1EEC27C6004EBB4D /* EventStruct.swift in Sources */,
 				A06252031EE46BF7007E5B5E /* AVEventControllerDelegate.swift in Sources */,
 				A06251EC1EE43E35007E5B5E /* AppDelegate.swift in Sources */,
 			);
@@ -314,6 +318,7 @@
 				A06251FF1EE43E35007E5B5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

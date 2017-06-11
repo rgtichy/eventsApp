@@ -9,6 +9,6 @@
 import UIKit
 
 protocol AVEventControllerDelegate: class {
-    func savePressed(controller: AddViewEventController, event: Event?, atRow: NSIndexPath?)
+    func savePressed(controller: AddViewEventController, event: event_struct, atRow: NSIndexPath?)
 }
 

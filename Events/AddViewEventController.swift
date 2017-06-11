@@ -18,7 +18,7 @@ class AddViewEventController: UIViewController {
     @IBOutlet weak var startInput: UIDatePicker!
     
     weak var delegate: AVEventControllerDelegate?
-    var parmEvent: Event?
+    var parmEvent: event_struct?
     var parmIndexPath: NSIndexPath?
     
     @IBAction func pickedDateTime(_ sender: UIDatePicker) {
@@ -30,24 +30,12 @@ class AddViewEventController: UIViewController {
 
     @IBAction func savePressed(_ sender: UIButton) {
         print("INSIDE AddView Event Controller: save pressed")
-//        let event = Event(context: coreDataObjectContext)
-        let event = Event()
+        let event = event_struct(title: titleInput.text!, info: infoInput.text, start: (startInput.date as NSDate) as Date, open: true)
         if titleInput.text != "" {
-            event.title = titleInput.text
-            event.info = infoInput.text
-            event.start = startInput.date as NSDate
             print("*** Date? ***")
             print(startInput.date)
             print("*** Date? ***")
             print(event.start)
-//                do {
-//                    try coreDataObjectContext.save()
-//                    print("Stored an event")
-//                } catch {
-//                    let nserror = error as NSError
-//                    print("Unresolved error \(nserror), \(nserror.userInfo)")
-//                    abort()
-//                }
             if ((parmIndexPath) != nil) {
                 delegate?.savePressed(controller: self, event: event, atRow: parmIndexPath)
             } else {
@@ -59,10 +47,15 @@ class AddViewEventController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        titleInput.text = parmEvent?.title
-        infoInput.text = parmEvent?.info
-        startInput.date = parmEvent?.start as! Date
+        if parmIndexPath != nil {
+            print("event (struct): \(parmEvent?.title), \(parmEvent?.info), \(parmEvent?.start), \(parmEvent?.open)")
+            titleInput.text = parmEvent?.title
+            infoInput.text = parmEvent?.info
+            startInput.date = (parmEvent?.start)! as Date
+        }
+        else {
+            print("add mode")
+        }
         // Do any additional setup after loading the view.
     }
 

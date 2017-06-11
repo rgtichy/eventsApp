@@ -53,6 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
         */
+        
+        //  "Events" is the name of this XCode project (not the entitities or rows within the CoreData persistant storage)
+        
         let container = NSPersistentContainer(name: "Events")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
