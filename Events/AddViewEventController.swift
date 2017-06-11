@@ -48,6 +48,8 @@ class AddViewEventController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if parmIndexPath != nil {
+            print("inside viewDidLoad()")
+            print("\(parmIndexPath?.section), \(parmIndexPath?.row)")
             print("event (struct): \(parmEvent?.title), \(parmEvent?.info), \(parmEvent?.start), \(parmEvent?.open)")
             titleInput.text = parmEvent?.title
             infoInput.text = parmEvent?.info

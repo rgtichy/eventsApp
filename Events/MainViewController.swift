@@ -65,18 +65,6 @@ import CoreData
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        var sections: Int = 0
-        if open_events.count>0 && closed_events.count>0 {
-            sections = 2
-        }
-        else {
-            if open_events.count>0 || closed_events.count>0 {
-                sections = 1
-            }
-            else {
-                sections = 0
-            }
-        }
         return 2
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -152,18 +140,20 @@ import CoreData
         AVEventController.delegate = self
         print("\ninside PrepareForSegue")
         if sender is NSIndexPath {
+            // the only segue with indexPath as sender is for open events accessory pressed
             let indexPath = sender as! NSIndexPath
-            let event = events[indexPath.row]
+            let event = open_events[indexPath.row]
             print("event:\(indexPath.row):  title:\(event.title!), info: \(event.info!), date: \(event.start!), open:\(event.open)")
-            AVEventController.parmEvent?.title = event.title!
-            AVEventController.parmEvent?.info = event.info!
-            AVEventController.parmEvent?.start = event.start as! Date
+            let tempEvent = event_struct(title: event.title!, info: event.info!, start: (event.start as! Date), open: true)
+            AVEventController.parmEvent = tempEvent
             AVEventController.parmIndexPath = indexPath
             print("parmEvent: title:\(AVEventController.parmEvent?.title), info: \(AVEventController.parmEvent?.info), date: \(AVEventController.parmEvent?.start), open:\(AVEventController.parmEvent?.open)")
         }
         else {
-            let event = event_struct(title: "", info: "", start: Date(), open: true)
+            let event = event_struct(title: "A1A", info: "A1A", start: Date(), open: true)
             AVEventController.parmEvent = event
+            print("event:  title:\(event.title), info: \(event.info), date: \(event.start), open:\(event.open)")
+            print("parmEvent: title:\(AVEventController.parmEvent?.title), info: \(AVEventController.parmEvent?.info), date: \(AVEventController.parmEvent?.start), open:\(AVEventController.parmEvent?.open)")
             AVEventController.parmIndexPath = nil
             dumpEvents()
         }
@@ -172,10 +162,10 @@ import CoreData
         print("returning to Main from Save Pressed")
             if indexPath != nil {
                 // locate the correct row in my events array
-                events[indexPath!.row].title = event.title
-                events[indexPath!.row].info = event.info
-                events[indexPath!.row].start = event.start as NSDate?
-                events[indexPath!.row].open = true
+                open_events[indexPath!.row].title = event.title
+                open_events[indexPath!.row].info = event.info
+                open_events[indexPath!.row].start = event.start as NSDate?
+                open_events[indexPath!.row].open = true
             }
             else {
                 // create a new entry into the Event entity in the coreDataObjectContext
